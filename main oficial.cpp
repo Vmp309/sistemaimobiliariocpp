@@ -1,6 +1,8 @@
 #include "Casa.h"
 #include "Apartamento.h"
 #include "Terreno.h"
+#include "archiveManagement.h"
+
 #include <vector>
 #include <string>
 #include <sstream>
@@ -8,7 +10,6 @@
 #include <stdlib.h>
 #include <fstream>
 #include <bits/stdc++.h>
-#include "archiveManagement.h"
 
 #define TAM_G 100;
 #define TAM_M 50;
@@ -86,9 +87,8 @@ int main (){
                 cout << "\t1. Casa" << endl;
                 cout << "\t2. Apartamento" << endl;
                 cout << "\t3. Terreno" << endl;
-                cin >> opcao3;
-                cout << opcao3 << endl;
-                if(opcao3==1){
+                cout << "\n\nAAAAAAAAAAAAAAAAAAAAAAAAA\n\n" ;
+                /*if(opcao3==1){
                     ///buscar   CASAS
                     ListarCasas();
                 }
@@ -98,7 +98,8 @@ int main (){
                 }
                 if(opcao3==3){
                     ///buscar   TERRENO
-                    ListarTerrenos();                }
+                    ListarTerrenos();
+                }*/
             }
 
             if(opcao2==3){
