@@ -3,17 +3,20 @@
 #include "Casa.h"
 #include "Apartamento.h"
 #include "Terreno.h"
-#include "Endereco.h"
+#include <bits/stdc++.h>
+#include <string.h>
+#include <iostream>
+#include <math.h>
+#include <stdio.h>
+#include <algorithm>
 #include <string>
 #include <vector>
-#include <fstream>
-#include <iostream>
-#include <stdlib.h>
 #include <sstream>
+#include <fstream>
 
 
-///A funÁ„o de ler arquivo È ler as strings de "listadeImoveis.txt" e por em vetores de string, separando em lista de imÛveis, lista de casas,
-///apartamentos e terreno, estas strings , por sua vez, ser„o transformadas em valores e setadas para os atributos dos objetos
+///A fun√ß√£o de ler arquivo √© ler as strings de "listadeImoveis.txt" e por em vetores de string, separando em lista de im√≥veis, lista de casas,
+///apartamentos e terreno, estas strings , por sua vez, ser√£o transformadas em valores e setadas para os atributos dos objetos
 
 vector <std::string> listaDeImoveis;
 vector <std::string> listaDeCasas;
@@ -475,21 +478,202 @@ void ListarTodosImoveis() {
 
 void ListarCasas() {
 	for (int i = 0; i < listaObjCasas.size(); i++) {
-		cout << "[" << i << "]" << endl;// Esse i printar· o index para a escolha da casa
+		cout << "[" << i << "]" << endl;// Esse i printar√° o index para a escolha da casa
 		listaObjCasas[i].toStringCasa();
 	}
 }
 
 void ListarApartamentos() {
 	for (int i = 0; i < listaObjApartamentos.size(); i++) {
-		cout << "[" << i << "]" << endl;// Esse i printar· o index para a escolha do apartamento
+		cout << "[" << i << "]" << endl;// Esse i printar√° o index para a escolha do apartamento
 		listaObjApartamentos[i].toStringApartamento();
 	}
 }
 
 void ListarTerrenos() {
 	for (int i = 0; i < listaObjTerrenos.size(); i++) {
-		cout << "[" << i << "]" << endl;// Esse i printar· o index para a escolha do terreno
+		cout << "[" << i << "]" << endl;// Esse i printar√° o index para a escolha do terreno
 		listaObjTerrenos[i].toStringTerreno();
+	}
+}
+
+
+void BuscaPorTitulo() {
+	string tdi_str, str_tituloAnuncio, str_numero_pav, str_num_quartos, str_areaDo_terreno, str_area_construida, str_tipo_oferta,
+		str_preco, str_rua, str_numeroDaCasa, str_bairro, str_cep, str_cidade, str_num_vagas, str_areaApartamento, str_valorCondominio,
+		str_posicao, str_descricao_terreno;
+
+	int tdi, int_num_pav, int_num_quartos, int_tipo_oferta, int_numeroDaCasa, int_num_vagas;
+
+	tdi = int_num_pav = int_num_quartos = int_tipo_oferta = int_numeroDaCasa = 0;
+
+
+	double doub_area_terreno, doub_area_construida, doub_preco, doub_valorCondominio, doub_areaApartamento;
+	char* pointer;
+
+
+
+	string str_tituloInput;
+	getline(cin, str_tituloInput);
+
+	char* cstr1 = new char(str_tituloInput.length() + 1);
+	std::strcpy(cstr1, str_tituloInput.c_str());
+
+	for (int i = 0; i < listaDeImoveis.size() - 1; i++) {
+		if (listaDeImoveis[i] == "1") {
+			//Checando se o titulo do usu√°rio √© semalhante ao de algum t√≠tulo da lista
+			char* cstr2 = new char(listaDeImoveis[i + 1].length() + 1);
+			std::strcpy(cstr2, listaDeImoveis[i + 1].c_str());
+
+			if (strncmp(strlwr(cstr1), strlwr(cstr2), strlen(cstr1)) == 0) {
+				
+				for (int j = 0; j < 13; j++) {
+					listaBuscaTitulo.push_back(listaDeImoveis[i + j]);
+				}
+				
+			};
+			i += 13;
+		}
+
+		if (listaDeImoveis[i] == "2") {
+			char* cstr2 = new char(listaDeImoveis[i + 1].length() + 1);
+			std::strcpy(cstr2, listaDeImoveis[i + 1].c_str());
+
+			if (strncmp(strlwr(cstr1), strlwr(cstr2), strlen(cstr1))) {
+				for (int j = 0; j < 14; j++) {
+					listaBuscaTitulo.push_back(listaDeImoveis[i + j]);
+				}
+			}
+			i += 14;
+		}
+
+		if (listaDeImoveis[i] == "3") {
+			char* cstr2 = new char(listaDeImoveis[i + 1].length() + 1);
+			std::strcpy(cstr2, listaDeImoveis[i + 1].c_str());
+
+			if (strncmp(strlwr(cstr1), strlwr(cstr2), strlen(cstr1))) {
+				for (int j = 0; j < 10; j++) {
+					listaBuscaTitulo.push_back(listaDeImoveis[i + j]);
+				}
+			}
+			i += 10;
+		}
+	}
+
+
+	///LEITURA DO VETOR DE STRINGS PARA LISTAGEM DE IMOVEIS POR TITULO
+	for (int a = 0; a < listaBuscaTitulo.size(); a++) {
+		if (listaBuscaTitulo[a] == "1") {
+			Casa ca = Casa();
+			ca.setTituloAnuncio(listaDeImoveis[a + 1]);
+
+			istringstream(listaDeImoveis[a + 2]) >> int_num_pav;
+			ca.setnumPav(int_num_pav);
+
+			istringstream(listaDeImoveis[a + 3]) >> int_num_quartos;
+			ca.setnumQuartos(int_num_quartos);
+
+			doub_area_terreno = strtod(listaDeImoveis[a + 4].c_str(), &pointer);
+			ca.setAreaTerreno(doub_area_terreno);
+
+			doub_area_construida = strtod(listaDeImoveis[a + 5].c_str(), &pointer);
+			ca.setAreaConstruida(doub_area_construida);
+
+			istringstream(listaDeImoveis[a + 6]) >> int_tipo_oferta;
+			ca.setTipoOferta(int_tipo_oferta);
+
+			doub_preco = strtod(listaDeImoveis[a + 7].c_str(), &pointer);
+			ca.setPreco(doub_preco);
+
+			ca.setRua(listaDeImoveis[a + 8]);
+
+			istringstream(listaDeImoveis[a + 9]) >> int_numeroDaCasa;
+			ca.setNumero(int_numeroDaCasa);
+
+			ca.setBairro(listaDeImoveis[a + 10]);
+
+			ca.setCep(listaDeImoveis[a + 11]);
+
+			ca.setCidade(listaDeImoveis[a + 12]);
+
+			cout << "[" << a << "]" << endl;
+
+			ca.toStringCasa();
+
+			a += 13;
+		}
+
+		if (listaDeImoveis[a] == "2") {
+			Apartamento apt = Apartamento();
+
+			apt.setTituloAnuncio(listaDeImoveis[a + 1]);
+
+			istringstream(listaDeImoveis[a + 2]) >> int_num_quartos;
+			apt.setnumQuartos(int_num_quartos);
+
+			istringstream(listaDeImoveis[a + 3]) >> int_num_vagas;
+			apt.setnumVagas(int_num_vagas);
+
+			doub_areaApartamento = strtod(listaDeImoveis[a + 4].c_str(), &pointer);
+			apt.setArea(doub_areaApartamento);
+
+			doub_valorCondominio = strtod(listaDeImoveis[a + 5].c_str(), &pointer);
+			apt.setValorCondominio(doub_valorCondominio);
+
+			apt.setPosicao(listaDeImoveis[a + 6]);
+
+			istringstream(listaDeImoveis[a + 7]) >> int_tipo_oferta;
+			apt.setTipoOferta(int_tipo_oferta);
+
+			doub_preco = strtod(listaDeImoveis[a + 8].c_str(), &pointer);
+			apt.setPreco(doub_preco);
+
+			apt.setRua(listaDeImoveis[a + 9]);
+
+			istringstream(listaDeImoveis[a + 10]) >> int_numeroDaCasa;
+			apt.setNumero(int_numeroDaCasa);
+
+			apt.setBairro(listaDeImoveis[a + 11]);
+
+			apt.setCep(listaDeImoveis[a + 12]);
+
+			apt.setCidade(listaDeImoveis[a + 13]);
+
+			cout << "[" << a << "]" << endl;
+			apt.toStringApartamento();
+
+			a += 14;
+		}
+
+		if (listaDeImoveis[a] == "3") {
+			Terreno te = Terreno();
+
+			te.setTituloAnuncio(listaDeImoveis[a + 1]);
+
+			doub_area_terreno = strtod(listaDeImoveis[a + 2].c_str(), &pointer);
+			te.setArea(doub_area_terreno);
+
+			te.setDescricaoTerreno(listaDeImoveis[a + 3]);
+
+			doub_preco = strtod(listaDeImoveis[a + 4].c_str(), &pointer);
+			te.setPreco(doub_preco);
+			
+			te.setRua(listaDeImoveis[a + 5]);
+
+			istringstream(listaDeImoveis[a + 6]) >> int_numeroDaCasa;
+			te.setNumero(int_numeroDaCasa);
+
+			te.setBairro(listaDeImoveis[a + 7]);
+
+			te.setCep(listaDeImoveis[a + 8]);
+
+			te.setCidade(listaDeImoveis[a + 9]);
+
+			cout << "[" << a << "]" << endl;
+
+			te.toStringTerreno();
+			
+			a += 10;
+		}
 	}
 }
